@@ -8,8 +8,8 @@
 */
 DesignStatus="Color_Test_1";//["Color_Test_2","Color_Test_3"]
 
-Number=7;
-ColorDist=255/Number;
+Number=5;
+ColorDist=256/(Number-1);
 CubeSize=5;
 alpha=1;
 
@@ -46,35 +46,19 @@ if(DesignStatus=="Color_Test_1"){
         }
     }
 }
-//Test_Object();
-//module Test_Object(){
-//    for (i=[0:1:Number-1]){
-//        translate([CubeSize*(i),0,Number+Number*CubeSize]){
-//            see_me_in_colourful(    (ColorDist/256)*i,
-//                                    0,
-//                                    1,
-//                                    0.5) {sphere(r=CubeSize/2);}
-//        }
-//        translate([CubeSize*(i),Number+Number*CubeSize,Number+Number*CubeSize]){
-//            see_me_in_colourful() {cube(CubeSize*0.75);}
-//        }
-//    }
-//}
-
-//ColorCubeDELTA_Start
-//ColorCubeDELTA_End
-
 if(DesignStatus=="Color_Test_2"){
-    for(j=[0:1:Number-1]){
-        for(i=[0:1:Number-1]){
+echo("Number from Color_Test_2",Number);
+echo("ColorDist from Color_Test_2",ColorDist);
+    for(i=[0:1:Number-1]){
+        for(j=[0:1:Number-1]){
             for(k=[0:1:Number-1]){
                 see_me_in_colourful(  ((1/256)*i*ColorDist),
                                       ((1/256)*j*ColorDist),
                                       ((1/256)*k*ColorDist),    
                                       alpha){
                     translate([CubeSize*i,CubeSize*j,CubeSize*k]){
-                        cube(CubeSize-CubeSize/5);
-                        echo("i",(Number*i/256));
+                        cube((CubeSize-CubeSize/5));
+                        //echo("i",(Number*i/256));
                     }
                 }
             }
@@ -89,40 +73,20 @@ module CUBE_CUT(){
     }
 }
 
-module see_me_in_colourful(R,Y,B,ALPHA){ // iterates the given modules and colors them automaticly by setting values using trigonometric funktions
+module see_me_in_colourful(R,G,B,ALPHA){ // iterates the given modules and colors them automaticly by setting values using trigonometric funktions
 C_ColorDist=(255/$children-1)/1000;
 echo("$children",$children);
 echo("C_ColorDist",C_ColorDist);
+echo("Red-Value",R);
+echo("Green-Value",G);
+echo("Blue-Value",B);
 for(i=[0:1:$children-1]){
-    //for(red=[0+i*C_ColorDist:1:$children-1]){
-        //for(green=[0+i*C_ColorDist:1:$children-1]){
-            //for(blue=[0+i*C_ColorDist:1:$children-1]){
-                    echo("Red-Value",R);
-                    echo("Yellow-Value",Y);
-                    echo("Blue-Value",B);
-                    translate([15/2,0,0]){
-                        //for(i=[0:$children-1]){
-                        a=255;
-                        b=50;       // cuts away the dark colors to prevent bad visual contrast to backgound
-                        //k_farbabstand=((a-b)/J);
-                        //Farbe=((k_farbabstand*J)/255);
-                        // SINUS_Foo=0.5+(sin(((360/(a-b))*k_farbabstand)*(J+1)))/2;
-                        // COSIN_Foo=0.5+(cos(((360/(a-b))*k_farbabstand)*(J+1)))/2;
-                        color (c = [    R,  //  Was: i+C_ColorDist/256)*i
-                                        Y,  //  Was: (C_ColorDist/256)*0,
-                                        G],  //  Was:(C_ColorDist/256)*0],
-                                        alpha = 0.3){
-                            //echo("red",red);
-                            //echo("C_ColorDist/256)*red",C_ColorDist/256*red);    
-                            render(convexity=10){children(i);} //renders the modules, effect is that inner caveties become visible
-                            //children();
-                            translate([70/2,0,0]){
-                                //cube([80,90,150],center=true);
-                            }
-                        }
-                    }
-        //        }
-      //      }
-    //    }
+    a=255;
+    b=50;       // cuts away the dark colors to prevent bad visual contrast to backgound
+    color (c = [    R,G,B],
+                    alpha = 0.9){
+        render(convexity=10){children(i);} //renders the modules, effect is that inner caveties become visible
+        //children();
+        }            
     }
 }
