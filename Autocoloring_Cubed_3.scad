@@ -8,7 +8,7 @@
 */
 DesignStatus="Color_Test_1";//["Color_Test_1","Color_Test_2","Color_Test_3"]
 
-Number=7;
+Number=5;
 ColorDist=256/(Number-1);
 CubeSize=5;
 alpha=1;
@@ -21,32 +21,41 @@ shown_by_customizer = false;
 function CUTTING_COLORS(I)=[0,(ColorDist/256)*I,1];
 
 if(DesignStatus=="Color_Test_1"){
-    see_me_in_colourful_AUTO(8/256,1/256,2/256,0.5){
-        translate([CubeSize*Number,0,Number+Number*CubeSize]){
-            cube(CubeSize*0.75);
-        }
-        translate([10,10,10]){
-            cube(CubeSize*0.75);
-        }
+    see_me_in_colourful_AUTO(1,1,1,0.5){
         translate([CubeSize*0,0,0]){
             cylinder(h=10,d=CubeSize*0.5);
         }
-        translate([CubeSize*1,0,0]){
-            cylinder(h=10,d=CubeSize*0.5);
-        }
+//        translate([CubeSize*1,0,0]){
+//            cylinder(h=10,d=CubeSize*0.5);
+//        }
         translate([CubeSize*2,0,0]){
             cylinder(h=10,d=CubeSize*0.5);
         }
     }
-    see_me_in_colourful_AUTO(1/256,8/256,1/256,0.9){                          // Cutting modules
+    see_me_in_colourful_AUTO(0.5,0.5,0.5,0.9){                          // Cutting modules
         translate([CubeSize*3,0,0]){
-            cylinder(h=10,d=CubeSize*0.5);
+            cylinder(h=15,d=CubeSize*0.5);
         }
         translate([CubeSize*4,0,0]){
-            cylinder(h=10,d=CubeSize*0.5);
+            cylinder(h=15,d=CubeSize*0.5);
         }
         translate([CubeSize*5,0,0]){
-            cylinder(h=10,d=CubeSize*0.5);
+            cylinder(h=15,d=CubeSize*0.5);
+        }
+        translate([CubeSize*6,0,0]){
+            cylinder(h=15,d=CubeSize*0.5);
+        }
+        translate([CubeSize*7,0,0]){
+            cylinder(h=15,d=CubeSize*0.5);
+        }
+        translate([CubeSize*8,0,0]){
+            cylinder(h=15,d=CubeSize*0.5);
+        }
+        translate([CubeSize*9,0,0]){
+            cylinder(h=15,d=CubeSize*0.5);
+        }
+        translate([CubeSize*10,0,0]){
+            cylinder(h=15,d=CubeSize*0.5);
         }
     }
 }
@@ -77,7 +86,7 @@ module CUBE_CUT(){
     }
 }
 module see_me_in_colourful(R,G,B,ALPHA){ //
-C_ColorDist=(255/$children-1)/1000;
+C_ColorDist=(256/$children-1)/100;
 echo("$children",$children);
 echo("C_ColorDist",C_ColorDist);
 echo("Red-Value",R);
@@ -93,21 +102,24 @@ for(i=[0:1:$children-1]){
         }            
     }
 }
-module see_me_in_colourful_AUTO(R,G,B,ALPHA){ //
-C_ColorDist=(255/$children-1)/1000;
+module see_me_in_colourful_AUTO(R_s,G_s,B_s,ALPHA){ //
+C_ColorDist_AUTO_R=((R_s)/($children-1));
+C_ColorDist_AUTO_G=((G_s)/($children-1));
+C_ColorDist_AUTO_B=((B_s)/($children-1));
 echo("children",$children);
 echo("$children_AUTO",$children);
-echo("C_ColorDist_AUTO",C_ColorDist);
-echo("Red-Value_AUTO",R);
-echo("Green-Value_AUTO",G);
-echo("Blue-Value_AUTO",B);
+echo("C_ColorDist_AUTO",C_ColorDist_AUTO_R);
+echo("Red-Value_AUTO",R_s);
+echo("Green-Value_AUTO",G_s);
+echo("Blue-Value_AUTO",B_s);
 for(i=[0:1:$children-1]){
-    a=255;
-    b=50;       // cuts away the dark colors to prevent bad visual contrast to backgound
-    color (c = [    R+i*C_ColorDist,G+i*C_ColorDist,B+i*C_ColorDist],
-                    alpha = 0.9){
+    color (c = [    i*R_s+i*C_ColorDist_AUTO_R,i*G_s+i*C_ColorDist_AUTO_G,i*B_s+i*C_ColorDist_AUTO_B],
+                    alpha = ALPHA){
         render(convexity=10){children(i);} //renders the modules, effect is that inner caveties become visible
         //children();
-        }            
+        }
+        echo("R", i*C_ColorDist_AUTO_R);
+        echo("G", i*C_ColorDist_AUTO_B);
+        echo("B", i*C_ColorDist_AUTO_G);
     }
 }
