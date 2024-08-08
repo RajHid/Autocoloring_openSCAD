@@ -6,7 +6,7 @@
     * The Cutting objects that are used to shape the Main objects {Red}
     * The Adding Objects that are used to shape the Main objects {Magenta}
 */
-DesignStatus="Color_Test_1";//["Color_Test_2","Color_Test_3"]
+DesignStatus="Color_Test_1";//["Color_Test_1","Color_Test_2","Color_Test_3"]
 
 Number=7;
 ColorDist=256/(Number-1);
@@ -21,9 +21,11 @@ shown_by_customizer = false;
 function CUTTING_COLORS(I)=[0,(ColorDist/256)*I,1];
 
 if(DesignStatus=="Color_Test_1"){
-    see_me_in_colourful(){
+    see_me_in_colourful_AUTO(8/256,1/256,2/256,0.5){
         translate([CubeSize*Number,0,Number+Number*CubeSize]){
             cube(CubeSize*0.75);
+        }
+        translate([10,10,10]){
             cube(CubeSize*0.75);
         }
         translate([CubeSize*0,0,0]){
@@ -35,6 +37,8 @@ if(DesignStatus=="Color_Test_1"){
         translate([CubeSize*2,0,0]){
             cylinder(h=10,d=CubeSize*0.5);
         }
+    }
+    see_me_in_colourful_AUTO(1/256,8/256,1/256,0.9){                          // Cutting modules
         translate([CubeSize*3,0,0]){
             cylinder(h=10,d=CubeSize*0.5);
         }
@@ -72,8 +76,7 @@ module CUBE_CUT(){
         cube([CubeSize,CubeSize,CubeSize*2],center=true);
     }
 }
-
-module see_me_in_colourful(R,G,B,ALPHA){ // iterates the given modules and colors them automaticly by setting values using trigonometric funktions
+module see_me_in_colourful(R,G,B,ALPHA){ //
 C_ColorDist=(255/$children-1)/1000;
 echo("$children",$children);
 echo("C_ColorDist",C_ColorDist);
@@ -84,6 +87,24 @@ for(i=[0:1:$children-1]){
     a=255;
     b=50;       // cuts away the dark colors to prevent bad visual contrast to backgound
     color (c = [    R,G,B],
+                    alpha = 0.9){
+        render(convexity=10){children(i);} //renders the modules, effect is that inner caveties become visible
+        //children();
+        }            
+    }
+}
+module see_me_in_colourful_AUTO(R,G,B,ALPHA){ //
+C_ColorDist=(255/$children-1)/1000;
+echo("children",$children);
+echo("$children_AUTO",$children);
+echo("C_ColorDist_AUTO",C_ColorDist);
+echo("Red-Value_AUTO",R);
+echo("Green-Value_AUTO",G);
+echo("Blue-Value_AUTO",B);
+for(i=[0:1:$children-1]){
+    a=255;
+    b=50;       // cuts away the dark colors to prevent bad visual contrast to backgound
+    color (c = [    R+i*C_ColorDist,G+i*C_ColorDist,B+i*C_ColorDist],
                     alpha = 0.9){
         render(convexity=10){children(i);} //renders the modules, effect is that inner caveties become visible
         //children();
