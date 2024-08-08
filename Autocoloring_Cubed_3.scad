@@ -8,7 +8,7 @@
 */
 DesignStatus="Color_Test_1";//["Color_Test_2","Color_Test_3"]
 
-Number=5;
+Number=7;
 ColorDist=256/(Number-1);
 CubeSize=5;
 alpha=1;
