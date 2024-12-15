@@ -8,7 +8,7 @@
 */
 DesignStatus="Color_Test_1";//["Color_Test_1","Color_Test_2","Color_Test_3"]
 
-Number=5;
+Number=10;
 ColorDist=256/(Number-1);
 CubeSize=5;
 alpha=1;
@@ -54,7 +54,7 @@ Quadr_8=8; // Color Cube Quadrant
             cylinder(h=10,d=CubeSize*0.5);
         }
     }
-        see_me_in_colourful_AUTO_3(0.0,1.0,0.0,0.0,0.0,0.0,0.9){
+        see_me_in_colourful_AUTO_3(0.0,1.0,0.0,1.0,0.0,1.0,0.9){
         translate([CubeSize*0,CubeSize*-2,0]){
             cylinder(h=10,d=CubeSize*0.5);
         }
@@ -71,7 +71,7 @@ Quadr_8=8; // Color Cube Quadrant
             cylinder(h=10,d=CubeSize*0.5);
         }
     }
-    see_me_in_colourful_AUTO_3(0.0,0.0,0.0,0.5,0.0,0.5,0.9){                          // Cutting modules
+    see_me_in_colourful_AUTO_3(0.0,0.0,0.0,0.5,0.0,0.5,1.0){                          // Cutting modules
         translate([CubeSize*0,CubeSize*1,0]){
             cylinder(h=15,d=CubeSize*0.5);
         }
@@ -103,6 +103,25 @@ Quadr_8=8; // Color Cube Quadrant
             cylinder(h=15,d=CubeSize*0.5);
         }
     }
+    translate([0,0,(CubeSize*Number)/log(Number)]){
+        echo("Number from Color_Test_1",Number);
+        echo("ColorDist from Color_Test_1",ColorDist);
+        for(i=[0:1:Number-1]){
+            for(j=[0:1:Number-1]){
+                for(k=[0:1:Number-1]){
+                    see_me_in_colourful(    ((1/256)*i*ColorDist),
+                                            ((1/256)*j*ColorDist),
+                                            ((1/256)*k*ColorDist),    
+                                            alpha){
+                        translate([CubeSize*i,CubeSize*j,CubeSize*k]){
+                            cube((CubeSize-CubeSize/5));
+                            //echo("i",(Number*i/256));
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 if(DesignStatus=="Color_Test_2"){
 echo("Number from Color_Test_2",Number);
@@ -111,8 +130,8 @@ echo("ColorDist from Color_Test_2",ColorDist);
         for(j=[0:1:Number-1]){
             for(k=[0:1:Number-1]){
                 see_me_in_colourful(    ((1/256)*i*ColorDist),
-                                        ((1/256)*k*ColorDist),
-                                        ((1/256)*j*ColorDist),    
+                                        ((1/256)*j*ColorDist),
+                                        ((1/256)*k*ColorDist),    
                                         alpha){
                     translate([CubeSize*i,CubeSize*j,CubeSize*k]){
                         cube((CubeSize-CubeSize/5));
