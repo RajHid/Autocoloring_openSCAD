@@ -94,7 +94,7 @@ module Generate_Grid_3() {
     }
 }
 translate([0,-50,0]){
-    meander ();
+    meander();
 }
 module meander(){
 END_x=3;
@@ -105,7 +105,7 @@ END_y=3;
                 echo("x",x);
                 echo("y",y);
                 translate([x*11,y*11,0]){
-                    #cube(10);
+                    cube(100);
                 }
             } 
         }
@@ -141,7 +141,7 @@ function add_up_to(n, sum=0) =
         sum :
         add_up_to(n-1, sum+n);
  
-echo(sum=add_up_to(2));
+echo(sum=add_up_to(3));
 // ECHO: sum = 5.00005e+009
 
 function red(RED) = ( (RED <= n) ? RED : RED - n); // for(i=[0:n-1]) (i % 2 == 0 ) ? 1:0  
@@ -149,9 +149,47 @@ function green(GREEN) = ((GREEN % 2 == 0) ? GREEN % 1: GREEN );
 //function blue(BLUE) = (BLUE<=n*n)? 0:1;
 
 
-echo(let(a = 135, s = sin(a), c = cos(a)) [ s, c ]); // ECHO: [0.707107, -0.707107]
+echo("let",let(a = 135, s = sin(a), c = cos(a)) [ s, c ]); // ECHO: [0.707107, -0.707107]
 
+//for (i = [10:50]) // creates a spiral of incrisingly sized spheres
+//{
+//    let (angle = i*360/20, r= i*2, distance = r*5)
+//    {
+//        rotate(angle, [1, 0, 0])
+//        translate([0, distance, 0])
+//        sphere(r = r);
+//    }
+//}
 
+for(i=[0:1:17]){
+    for(n=[1:-2:-1]){
+        for(j_y=[0:1:8-1]){
+            for(m=[-1:2:1]){
+                for (j_x=[0:1*n:8-1]){
+                    let(x_Step= j_x*6 , y_Step=i/2*6*n, z_Step=i/3*6){
+                        translate([x_Step,y_Step,z_Step]){
+//                            cube(5);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+let_for_LOOP();
+
+module let_for_LOOP(){
+    for(n=[1:-2:-1]){
+        for(m=[1:1:5]){
+            let(x_Step= (n*6)*m,y_Step=6*n*-m,z_Step=1){
+                translate([x_Step,y_Step,z_Step]){
+                    cube(5);
+                }
+            }
+        }
+    }
+}
 ////example 3 - iteration over a vector of vectors
 //for(i = [ [[ 0,  0,  0], 20],
 //          [[10, 12, 10], 50],
