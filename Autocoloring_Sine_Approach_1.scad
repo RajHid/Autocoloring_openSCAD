@@ -228,20 +228,26 @@ module Recursive_Color_Cube(r=1,anzColor=3){
         }
     }
 }
-anzColor_x=3;
+anzColor_x=5;
 r=1;
 2_Recursive_Color_Cube();
-module 2_Recursive_Color_Cube(r=1,n,anzColor_y=3){
+module 2_Recursive_Color_Cube(r=1){
     //echo("anzColor",anzColor);
     //if(anzColor*anzColor>=0){
     //for(m=[0:1:anzColor_y-1]){
         //echo("anzColor_y",anzColor_y);
-        for(n=[0:1:anzColor_x-1]){
+        for(n=[0:1*r:anzColor_x*r-1*r]){
             echo("anzColor_x",anzColor_x);
-            translate([n*7,m*7,0]){
-                color(c=[0,1/(m+1),0.5],alpha = 0.5){
+            translate([n*7*r,r*7,r]){
+                color(c=[0,1/abs(n),0.5],alpha = 0.5){
+                    echo("1/abs(n)",1/abs(n));
+                    echo("floor 0",floor(0));
+                    echo("Sign",sign(-5.0));        //!!! Signum Function ==> gives back 1, 0 or -1 in case a val;ue is above, zero or under -1,
                     cube(5);
                 }
+            }
+            if(n==anzColor_x-1){
+                2_Recursive_Color_Cube(-1);
             }
         }
         //2_Recursive_Color_Cube(-1,n-1,anzColor_y);
