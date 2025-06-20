@@ -229,29 +229,39 @@ module Recursive_Color_Cube(r=1,anzColor=3){
     }
 }
 anzColor_x=5;
+anzColor_y=1;
 r=1;
+CubeCount=1;        //WAS: anzColor_x^2
 2_Recursive_Color_Cube();
-module 2_Recursive_Color_Cube(r=1){
+module 2_Recursive_Color_Cube(r=1,y_Val=0){
     //echo("anzColor",anzColor);
     //if(anzColor*anzColor>=0){
-    //for(m=[0:1:anzColor_y-1]){
-        //echo("anzColor_y",anzColor_y);
-        for(n=[0:1*r:anzColor_x*r-1*r]){
-            echo("anzColor_x",anzColor_x);
-            translate([n*7*r,r*7,r]){
-                color(c=[0,1/abs(n),0.5],alpha = 0.5){
-                    echo("1/abs(n)",1/abs(n));
-                    echo("floor 0",floor(0));
-                    echo("Sign",sign(-5.0));        //!!! Signum Function ==> gives back 1, 0 or -1 in case a val;ue is above, zero or under -1,
-                    cube(5);
+    for(CubeCount=[0:1:0]){
+        //for(y_Val=[0:1:anzColor_y-1]){
+            //echo("anzColor_y",anzColor_y);
+            for(x_Val=[0:1*r:(anzColor_x-1)*r]){
+                //echo("anzColor_x",anzColor_x);
+                translate([x_Val*7*r,y_Val*7,CubeCount]){
+                    color(c=[0,1/abs(x_Val),0.5],alpha = 0.5){
+                        //echo("1/abs(n)",1/abs(x_Val));
+                        //echo("floor 0",floor(0));
+                        //echo("Sign",sign(-5.0));            //!!! Signum Function ==> gives back 1, 0 or -1 in case a val;ue is above, zero or under -1,
+                        //cube(5);
+                        text(str(x_Val), font = "Liberation Sans", size=4);
+                    }
+                }
+                echo("x_Val",x_Val);
+                if(x_Val*r==(anzColor_x-1)*r){
+                    echo("x_Val==anzColor_x-1 is TRUE");
+                    echo("r*-1 FROM IF",r*-1);
+                    echo("y_Val+abs(r) FROM IF",y_Val+abs(r));
+                    2_Recursive_Color_Cube(r*-1,y_Val+abs(r));
                 }
             }
-            if(n==anzColor_x-1){
-                2_Recursive_Color_Cube(-1);
-            }
-        }
-        //2_Recursive_Color_Cube(-1,n-1,anzColor_y);
-    //}
+            //2_Recursive_Color_Cube(-1,n-1,anzColor_y);
+            echo("y_Val",y_Val);
+        //}
+    }
     //}
     //2_Recursive_Color_Cube(-1,anzColor_x,anzColor_y-1);
 }
