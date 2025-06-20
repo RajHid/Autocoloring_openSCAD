@@ -131,17 +131,17 @@ result_3 = [for(i=[0:1:n*n])[   i,
                                 (i % 2 != 0) ? i/2 : 9,
                                 0]];
 result_4 = [for(i=[1:1:(n*n)])[i,[red(i),green(i)]]];
-echo("result_1",result_1); //ECHO: [0, 1, 0, 1, 0, 1, 0, 1, 0, 1]
-echo("result_3",result_2);
-echo("result_3",result_3);
-echo("result_4",result_4);
+//echo("result_1",result_1); //ECHO: [0, 1, 0, 1, 0, 1, 0, 1, 0, 1]
+//echo("result_3",result_2);
+//echo("result_3",result_3);
+//echo("result_4",result_4);
 
 function add_up_to(n, sum=0) =
     n==0 ?
         sum :
         add_up_to(n-1, sum+n);
  
-echo(sum=add_up_to(3));
+//echo(sum=add_up_to(3));
 // ECHO: sum = 5.00005e+009
 
 function red(RED) = ( (RED <= n) ? RED : RED - n); // for(i=[0:n-1]) (i % 2 == 0 ) ? 1:0  
@@ -149,7 +149,7 @@ function green(GREEN) = ((GREEN % 2 == 0) ? GREEN % 1: GREEN );
 //function blue(BLUE) = (BLUE<=n*n)? 0:1;
 
 
-echo("let",let(a = 135, s = sin(a), c = cos(a)) [ s, c ]); // ECHO: [0.707107, -0.707107]
+//echo("let",let(a = 135, s = sin(a), c = cos(a)) [ s, c ]); // ECHO: [0.707107, -0.707107]
 
 //for (i = [10:50]) // creates a spiral of incrisingly sized spheres
 //{
@@ -232,14 +232,14 @@ anzColor_x=5;
 anzColor_y=1;
 r=1;
 CubeCount=1;        //WAS: anzColor_x^2
-2_Recursive_Color_Cube();
+//2_Recursive_Color_Cube();
 module 2_Recursive_Color_Cube(r=1,y_Val=0){
     //echo("anzColor",anzColor);
     //if(anzColor*anzColor>=0){
     for(CubeCount=[0:1:0]){
         //for(y_Val=[0:1:anzColor_y-1]){
             //echo("anzColor_y",anzColor_y);
-            for(x_Val=[0:1*r:(anzColor_x-1)*r]){
+            for(x_Val=[(anzColor_x-1)*r:-(1*r):0]){  // ? can a for-Loop start on the outskirts and cont inward? from 4 to 0 and -4 to 0?
                 //echo("anzColor_x",anzColor_x);
                 translate([x_Val*7*r,y_Val*7,CubeCount]){
                     color(c=[0,1/abs(x_Val),0.5],alpha = 0.5){
@@ -265,6 +265,35 @@ module 2_Recursive_Color_Cube(r=1,y_Val=0){
     //}
     //2_Recursive_Color_Cube(-1,anzColor_x,anzColor_y-1);
 }
+For_Loop_Experiments(0,1,5,0);
+module For_Loop_Experiments(Start=7,Step=7,End=7,Exit=7){
+    y=0;
+    z=0;
+    ENDE=2;
+    echo("Start",Start);
+    echo("Step",Step);
+    echo("End",End);
+    echo("Exit",Exit);
+    if(Exit<ENDE){
+        for(n=[Start:Step:End]){
+            translate([abs((Start-n)*7),Exit*7,z*7]){
+                echo("n",n);
+                text(str(n), font = "Liberation Sans", size=4);
+                //cube(5);
+            }
+            if(n==End){
+                echo("n==End",n);
+                Help=End;
+                End=Start;
+                Start=Help;
+                Step=Step*-1;
+                Exit=Exit+1;
+                For_Loop_Experiments(Start,Step,End,Exit);
+            }
+        }
+    }
+}
+
 ////example 3 - iteration over a vector of vectors
 //for(i = [ [[ 0,  0,  0], 20],
 //          [[10, 12, 10], 50],
