@@ -265,30 +265,44 @@ module 2_Recursive_Color_Cube(r=1,y_Val=0){
     //}
     //2_Recursive_Color_Cube(-1,anzColor_x,anzColor_y-1);
 }
-For_Loop_Experiments(0,1,5,0);
-module For_Loop_Experiments(Start=7,Step=7,End=7,Exit=7){
+For_Loop_Experiments(0,1,5,0,19);
+module For_Loop_Experiments(Start=7,Step=7,End=7,Exit=7,Foo=1){
     y=0;
     z=0;
-    ENDE=2;
+    ENDE=5;
     echo("Start",Start);
     echo("Step",Step);
     echo("End",End);
     echo("Exit",Exit);
     if(Exit<ENDE){
-        for(n=[Start:Step:End]){
-            translate([abs((Start-n)*7),Exit*7,z*7]){
-                echo("n",n);
-                text(str(n), font = "Liberation Sans", size=4);
-                //cube(5);
-            }
-            if(n==End){
-                echo("n==End",n);
-                Help=End;
-                End=Start;
-                Start=Help;
-                Step=Step*-1;
-                Exit=Exit+1;
-                For_Loop_Experiments(Start,Step,End,Exit);
+        for(m=[1:1:1]){
+            for(n=[Start:Step:End]){
+                translate([abs((n)*7),Exit*7,z*7]){
+                    echo("n_",n+Exit);
+                    echo("Start_",Start);
+                    echo("End_",End);
+                    safe_n = (n == 0) ? 0 : 1/n; // to avoid division by ZERO (I Asked Chat GPT for that in 2026-06-23)
+                    safe_exit = (Exit == 0) ? 0 : 1/Exit;
+                    color(c=[safe_n, safe_exit, 0], alpha=0.5){
+//                    color(c=[1/n,1/Exit,0],alpha=0.5){
+                        text(str(n), font = "Liberation Sans", size=4);
+                        cube(5);
+                    }
+                    echo("CUT================");
+                }
+                if(n==End){
+                    echo("n==End",n);
+                    Help=End;
+                    End=Start;
+                    Start=Help;
+                    Step=Step*-1;
+                    Exit=Exit+1;
+                    echo("GoTo-------------");
+                    For_Loop_Experiments(Start,Step,End,Exit,1);
+                }
+                else if(Foo==9){
+                        echo("1==1");
+                }
             }
         }
     }
