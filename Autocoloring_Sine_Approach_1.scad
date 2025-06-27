@@ -274,7 +274,7 @@ module For_Loop_Experiments(Start=7,Step=7,End=7,Exit=7,Foo=1){
     echo("Step",Step);
     echo("End",End);
     echo("Exit",Exit);
-    if(Exit<ENDE){
+    if(Exit<=ENDE){
         for(m=[1:1:1]){
             for(n=[Start:Step:End]){
                 translate([abs((n)*7),Exit*7,z*7]){
@@ -285,7 +285,7 @@ module For_Loop_Experiments(Start=7,Step=7,End=7,Exit=7,Foo=1){
                     safe_exit = (Exit == 0) ? 0 : 1/Exit;
                     color(c=[safe_n, safe_exit, 0], alpha=0.5){
 //                    color(c=[1/n,1/Exit,0],alpha=0.5){
-                        text(str(n), font = "Liberation Sans", size=4);
+                        text(str(n,Exit) , font = "Liberation Sans", size=4);
                         cube(5);
                     }
                     echo("CUT================");
